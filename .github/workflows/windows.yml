@@ -74,7 +74,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
-          tag_commit=$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha 2>/dev/null || true)
+          if ! tag_commit=$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha 2>/dev/null); then
+            tag_commit=''
+          fi
           if [ -n "$tag_commit" ] && [ "$tag_commit" != "$GITHUB_SHA" ]; then
             echo 'Release tag points to a different commit; publish a new version instead.'
             exit 1
