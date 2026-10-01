@@ -221,6 +221,7 @@ class BrowserTests(unittest.TestCase):
                 config,
                 Path(folder),
                 sender,
+                browser_headless=True,
             )
             with open(Path(folder) / "lote-local-test.csv", encoding="utf-8-sig") as f:
                 report = list(csv.DictReader(f, delimiter=";"))

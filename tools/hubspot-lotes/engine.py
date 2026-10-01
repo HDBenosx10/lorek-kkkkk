@@ -534,7 +534,16 @@ def submit_visible(page, config, timeout_ms=30000):
 
 
 def run_batch(
-    contacts, batch, preview, stop, emit, config=None, folder=None, sender=send_http
+    contacts,
+    batch,
+    preview,
+    stop,
+    emit,
+    config=None,
+    folder=None,
+    sender=send_http,
+    *,
+    browser_headless=False,
 ):
     config = config or Config()
     config.validate()
@@ -556,7 +565,9 @@ def run_batch(
                 ["msedge", "chrome"] if config.browser == "auto" else [config.browser]
             ):
                 try:
-                    browser = engine.chromium.launch(channel=channel, headless=False)
+                    browser = engine.chromium.launch(
+                        channel=channel, headless=browser_headless
+                    )
                     break
                 except Exception:
                     continue
