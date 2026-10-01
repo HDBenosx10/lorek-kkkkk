@@ -1,172 +1,333 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Leonardo Lagoa: tráfego pago e CRM na prática</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#FAF7F5;--card:#fff;--ink:#2A2226;--muted:#6F6468;--line:#E6D9DC;--head:#4A1425;--rose:#F3E4E8;color-scheme:light;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
-@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "DM Sans",system-ui,sans-serif}
-.serif{font-family:"Playfair Display",Georgia,"Times New Roman",serif;font-weight:500}
-.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
-a{color:inherit}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(250,247,245,.94);border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:500;color:var(--head)}
-#clock{font-size:13px;color:var(--muted)}
-nav{display:flex;gap:20px;font-size:14px}
-nav a{text-decoration:none;color:var(--muted)}nav a:hover{color:var(--head)}
-@media (max-width:640px){#clock{display:none}}
-.hero{padding:88px 0 72px}
-h1{font-size:clamp(42px,9vw,92px);line-height:1.04;color:var(--head);margin:0 0 22px;letter-spacing:-.01em}
-.lead{font-size:19px;color:var(--muted);max-width:44ch;margin:0 0 28px}
-.btn{display:inline-block;font:500 15px "DM Sans",sans-serif;border-radius:8px;padding:12px 22px;text-decoration:none;transition:background .15s,border-color .15s}
-.p{background:#17756C;color:#FAF7F5}.p:hover{background:#6B1F36}
-.s{background:var(--rose);color:var(--head);font-size:14px;padding:9px 16px}
-.band .p{border:1px solid #FAF7F5}.band .p:hover{background:#FAF7F5;color:#6B1F36}
-.btn:focus-visible,a:focus-visible{outline:3px solid var(--head);outline-offset:2px}
-section{padding:0 0 84px}
-.sh{display:flex;align-items:baseline;justify-content:space-between;border-top:1px solid var(--line);padding-top:16px;margin-bottom:28px}
-.sh .n{font-size:13px;color:var(--muted)}
-h2{font-size:clamp(28px,4vw,40px);line-height:1.15;color:var(--head);margin:0}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.card{display:block;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;text-decoration:none;transition:border-color .15s}
-.card:hover{border-color:#6B1F36}
-.vis{height:190px;background:var(--rose);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px;position:relative}
-.vis .big{font-size:58px;line-height:1;color:#4A1425}
-.vis .sm{font-size:13px;color:#6F6468;margin-top:4px}
-.vis svg{position:absolute;right:16px;top:16px}
-.days{display:flex;gap:6px;margin-bottom:10px}
-.days i{width:30px;height:46px;border-radius:6px;border:1px solid #6B1F36;background:transparent;display:block}
-.days i.on{background:#6B1F36}
-.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;color:#4A1425}
-.flow b{font-weight:500;background:#fff;border:1px solid #E6D9DC;border-radius:8px;padding:5px 9px}
-.flow span{color:#B08D57}
-.cb{padding:16px 18px 18px}
-.tag{font-size:13px;color:#6B1F36;margin:0}
-.ct{font-size:18px;font-weight:500;margin:2px 0 4px}
-.rs{font-size:14px;color:var(--muted);margin:0 0 12px}
-.go{font-size:14px;color:var(--head);text-decoration:underline;text-underline-offset:3px}
-.about{display:grid;grid-template-columns:minmax(200px,320px) 1fr;gap:36px;align-items:center}
-@media (max-width:640px){.about{grid-template-columns:1fr}}
-.logo{background:var(--rose);border-radius:8px;display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;max-width:320px}
-.about p{font-size:20px;line-height:1.5;margin:0 0 18px;max-width:34ch}
-.row{display:grid;grid-template-columns:56px 1fr;gap:6px 18px;padding:22px 0;border-top:1px solid var(--line)}
-.row .num{font-size:14px;color:var(--muted);padding-top:6px}
-.row h3{font-size:24px;margin:0 0 4px;color:var(--head)}
-.row p{margin:0 0 12px;color:var(--muted)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips span{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:5px 12px;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:22px}
-.stat .big{font-size:56px;line-height:1;color:var(--head)}
-.stat p{margin:8px 0 0;color:var(--muted);font-size:14px}
-.cap{font-size:13px;color:var(--muted);margin:14px 0 0}
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:22px}
-.step{border-top:1px solid var(--head);padding-top:12px}
-.step .n{font-size:13px;color:var(--muted)}
-.step h3{font-size:20px;margin:2px 0 4px;color:var(--head)}
-.step p{margin:0;font-size:14px;color:var(--muted)}
-.band{background:#6B1F36;color:#FAF7F5;padding:72px 0 56px}
-.band h2{color:#FAF7F5;font-size:clamp(34px,6vw,60px)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;align-items:center;margin-top:20px}
-.band p{margin:0;color:#EBD3DA;max-width:40ch}
-.ph{background:#fff;border-radius:8px;padding:16px;color:#6F6468}
-.ph .f{height:36px;border:1px solid #D9D9D9;border-radius:4px;margin-bottom:10px;display:flex;align-items:center;padding:0 10px;font-size:14px}
-.ph .b{display:inline-block;background:#2D3E50;color:#fff;border-radius:4px;padding:8px 16px;font-size:14px}
-.ph small{display:block;margin-top:10px;font-size:12px}
-.links{margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
-.links .lk{color:#EBD3DA;font-size:14px;text-underline-offset:3px}
-footer{padding:16px 0;font-size:13px;color:var(--muted)}
-</style>
-</head>
-<body>
-<header><div class="wrap">
-<a class="brand" href="#">
-<svg width="32" height="32" viewBox="0 0 80 80" aria-hidden="true"><rect width="80" height="80" rx="12" fill="#6B1F36"/><path d="M16 18 V58 H36" fill="none" stroke="#FAF7F5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 18 V58 H68" fill="none" stroke="#FAF7F5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 50 L58 43 L63 46 L69 31" fill="none" stroke="#B08D57" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="69" cy="31" r="3.5" fill="#B08D57"/></svg>
-Leonardo Lagoa</a>
-<span id="clock">Rio de Janeiro</span>
-<nav><a href="#cases">Cases</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav>
-</div></header>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Portfólio de Leonardo Lagoa: campanhas de tráfego pago, análise de resultados e projetos de CRM e automação."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>Leonardo Lagoa: tráfego pago e CRM na prática</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Playfair+Display:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="main.js" defer></script>
+    <script
+      id="hubspot-embed"
+      src="https://js.hsforms.net/forms/embed/51906766.js"
+      defer
+    ></script>
+  </head>
+  <body id="inicio">
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <header>
+      <div class="wrap">
+        <a class="brand" href="#inicio">
+          <svg width="32" height="32" viewBox="0 0 80 80" aria-hidden="true">
+            <rect width="80" height="80" rx="12" fill="#6B1F36" />
+            <path
+              d="M16 18 V58 H36"
+              fill="none"
+              stroke="#FAF7F5"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M46 18 V58 H68"
+              fill="none"
+              stroke="#FAF7F5"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M52 50 L58 43 L63 46 L69 31"
+              fill="none"
+              stroke="#B08D57"
+              stroke-width="3.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="69" cy="31" r="3.5" fill="#B08D57" />
+          </svg>
+          Leonardo Lagoa</a
+        >
+        <span id="clock">Rio de Janeiro</span>
+        <nav aria-label="Navegação principal">
+          <a href="#cases">Cases</a><a href="#sobre">Sobre</a
+          ><a href="#contato">Contato</a>
+        </nav>
+      </div>
+    </header>
 
-<main>
-<section class="hero" style="padding-bottom:72px"><div class="wrap">
-<h1 class="serif">Tráfego pago<br>e CRM na prática</h1>
-<p class="lead">Estudante de Marketing no Rio de Janeiro. Campanhas reais e um funil que montei do zero.</p>
-<a class="btn p" href="#cases">Ver cases</a>
-</div></section>
+    <main id="conteudo" tabindex="-1">
+      <section class="hero">
+        <div class="wrap">
+          <h1 class="serif">Tráfego pago<br />e CRM na prática</h1>
+          <p class="lead">
+            Estudante de Marketing no Rio de Janeiro. Campanhas reais e um funil
+            que montei do zero.
+          </p>
+          <a class="btn p" href="#cases">Ver cases</a>
+        </div>
+      </section>
 
-<section id="cases"><div class="wrap">
-<div class="sh"><h2 class="serif">Cases</h2><span class="n">03</span></div>
-<div class="cards">
-<a class="card" href="#">
-<div class="vis"><svg width="104" height="48" viewBox="0 0 104 48" aria-hidden="true"><polyline points="2,40 24,34 46,36 68,22 88,24 100,8" fill="none" stroke="#6B1F36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="100" cy="8" r="4" fill="#B08D57"/></svg><span class="big serif">+19%</span><span class="sm">conversões no período analisado</span></div>
-<div class="cb"><p class="tag">Mídia de performance</p><p class="ct">Otimização de campanha de saúde</p><p class="rs">Custo por conversão -17%</p><span class="go">Ler case</span></div>
-</a>
-<a class="card" href="#">
-<div class="vis"><div class="days" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></div><span class="sm">Orçamento da semana (ilustração)</span></div>
-<div class="cb"><p class="tag">Diagnóstico</p><p class="ct">Orçamento e rastreamento</p><p class="rs">Por que o orçamento acabava em poucos dias</p><span class="go">Ler case</span></div>
-</a>
-<a class="card" href="#">
-<div class="vis"><div class="flow" aria-hidden="true"><b>Formulário</b><span>›</span><b>CRM</b><span>›</span><b>Segmento</b><span>›</span><b>E-mail</b></div><span class="sm" style="margin-top:10px">Fluxo do funil</span></div>
-<div class="cb"><p class="tag">CRM e automação</p><p class="ct">O funil deste portfólio</p><p class="rs">Formulário, CRM e e-mail automático</p><span class="go" style="text-decoration:none;color:var(--muted)">Em construção</span></div>
-</a>
-</div>
-</div></section>
+      <section id="cases">
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="serif">Cases</h2>
+            <span class="n">03</span>
+          </div>
+          <div class="cards">
+            <article class="card">
+              <div class="vis">
+                <svg
+                  width="104"
+                  height="48"
+                  viewBox="0 0 104 48"
+                  aria-hidden="true"
+                >
+                  <polyline
+                    points="2,40 24,34 46,36 68,22 88,24 100,8"
+                    fill="none"
+                    stroke="#6B1F36"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <circle cx="100" cy="8" r="4" fill="#B08D57" /></svg
+                ><span class="big serif">+19%</span
+                ><span class="sm">conversões no período analisado</span>
+              </div>
+              <div class="cb">
+                <p class="tag">Mídia de performance</p>
+                <h3 class="ct">Otimização de campanha de saúde</h3>
+                <p class="rs">Custo por conversão -17%</p>
+                <span class="go pending">Case em breve</span>
+              </div>
+            </article>
+            <article class="card">
+              <div class="vis">
+                <div class="days" aria-hidden="true">
+                  <i class="on"></i><i class="on"></i><i class="on"></i><i></i
+                  ><i></i><i></i><i></i>
+                </div>
+                <span class="sm">Orçamento da semana (ilustração)</span>
+              </div>
+              <div class="cb">
+                <p class="tag">Diagnóstico</p>
+                <h3 class="ct">Orçamento e rastreamento</h3>
+                <p class="rs">Por que o orçamento acabava em poucos dias</p>
+                <span class="go pending">Case em breve</span>
+              </div>
+            </article>
+            <article class="card">
+              <div class="vis">
+                <div class="flow" aria-hidden="true">
+                  <b>Formulário</b><span>›</span><b>CRM</b><span>›</span
+                  ><b>Segmento</b><span>›</span><b>E-mail</b>
+                </div>
+                <span class="sm flow-caption">Fluxo do funil</span>
+              </div>
+              <div class="cb">
+                <p class="tag">CRM e automação</p>
+                <h3 class="ct">O funil deste portfólio</h3>
+                <p class="rs">Formulário, CRM e e-mail automático</p>
+                <span class="go pending">Em construção</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
 
-<section id="sobre"><div class="wrap">
-<div class="sh"><h2 class="serif">Sobre</h2><span class="n">01</span></div>
-<div class="about">
-<div class="logo"><svg width="55%" viewBox="0 0 80 80" aria-label="Logo LL"><rect width="80" height="80" rx="12" fill="#6B1F36"/><path d="M16 18 V58 H36" fill="none" stroke="#FAF7F5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 18 V58 H68" fill="none" stroke="#FAF7F5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M52 50 L58 43 L63 46 L69 31" fill="none" stroke="#B08D57" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="69" cy="31" r="3.5" fill="#B08D57"/></svg></div>
-<div><p class="serif">Estudo Marketing e trabalho com campanhas de Google Ads. Também monto, por conta própria, um funil de CRM no HubSpot para praticar.</p><a class="go" href="#">Currículo (PDF)</a></div>
-</div>
-</div></section>
+      <section id="sobre">
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="serif">Sobre</h2>
+            <span class="n">01</span>
+          </div>
+          <div class="about">
+            <div class="logo">
+              <svg width="55%" viewBox="0 0 80 80" aria-label="Logo LL">
+                <rect width="80" height="80" rx="12" fill="#6B1F36" />
+                <path
+                  d="M16 18 V58 H36"
+                  fill="none"
+                  stroke="#FAF7F5"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M46 18 V58 H68"
+                  fill="none"
+                  stroke="#FAF7F5"
+                  stroke-width="6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M52 50 L58 43 L63 46 L69 31"
+                  fill="none"
+                  stroke="#B08D57"
+                  stroke-width="3.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="69" cy="31" r="3.5" fill="#B08D57" />
+              </svg>
+            </div>
+            <div>
+              <p class="serif">
+                Estudo Marketing e trabalho com campanhas de Google Ads. Também
+                monto, por conta própria, um funil de CRM no HubSpot para
+                praticar.
+              </p>
+              <span class="go pending" aria-disabled="true" title="Em breve"
+                >Currículo (PDF)</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section><div class="wrap">
-<div class="sh"><h2 class="serif">O que eu faço</h2><span class="n">02</span></div>
-<div class="row"><span class="num">01</span><div><h3 class="serif">Mídia de performance</h3><p>Campanhas de pesquisa e análise de resultados.</p><div class="chips"><span>Google Ads</span><span>Relatórios</span></div></div></div>
-<div class="row"><span class="num">02</span><div><h3 class="serif">CRM e automação</h3><p>Formulários, segmentação e e-mail automático.</p><div class="chips"><span>HubSpot</span><span>RD Station</span></div></div></div>
-<div class="row" style="border-bottom:1px solid var(--line)"><span class="num">03</span><div><h3 class="serif">Rastreamento e análise</h3><p>Conversões, origem dos contatos e leitura de dados.</p><div class="chips"><span>Conversões</span><span>UTMs</span></div></div></div>
-</div></section>
+      <section>
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="serif">O que eu faço</h2>
+            <span class="n">02</span>
+          </div>
+          <div class="row">
+            <span class="num">01</span>
+            <div>
+              <h3 class="serif">Mídia de performance</h3>
+              <p>Campanhas de pesquisa e análise de resultados.</p>
+              <div class="chips">
+                <span>Google Ads</span><span>Relatórios</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="num">02</span>
+            <div>
+              <h3 class="serif">CRM e automação</h3>
+              <p>Formulários, segmentação e e-mail automático.</p>
+              <div class="chips">
+                <span>HubSpot</span><span>RD Station</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <span class="num">03</span>
+            <div>
+              <h3 class="serif">Rastreamento e análise</h3>
+              <p>Conversões, origem dos contatos e leitura de dados.</p>
+              <div class="chips"><span>Conversões</span><span>UTMs</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section><div class="wrap">
-<div class="sh"><h2 class="serif">Resultados</h2><span class="n">03</span></div>
-<div class="stats">
-<div class="stat"><span class="big serif">+19%</span><p>Conversões</p></div>
-<div class="stat"><span class="big serif">-17%</span><p>Custo por conversão</p></div>
-</div>
-<p class="cap">Campanha de saúde, no período analisado.</p>
-</div></section>
+      <section>
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="serif">Resultados</h2>
+            <span class="n">03</span>
+          </div>
+          <div class="stats">
+            <div class="stat">
+              <span class="big serif">+19%</span>
+              <p>Conversões</p>
+            </div>
+            <div class="stat">
+              <span class="big serif">-17%</span>
+              <p>Custo por conversão</p>
+            </div>
+          </div>
+          <p class="cap">Campanha de saúde, no período analisado.</p>
+        </div>
+      </section>
 
-<section><div class="wrap">
-<div class="sh"><h2 class="serif">Como eu trabalho</h2><span class="n">04</span></div>
-<div class="steps">
-<div class="step"><span class="n">01</span><h3 class="serif">Diagnóstico</h3><p>Entendo o problema com os dados.</p></div>
-<div class="step"><span class="n">02</span><h3 class="serif">Hipótese</h3><p>Defino o que testar e por quê.</p></div>
-<div class="step"><span class="n">03</span><h3 class="serif">Execução</h3><p>Ajusto campanhas e fluxos.</p></div>
-<div class="step"><span class="n">04</span><h3 class="serif">Aprendizado</h3><p>Registro o que funcionou.</p></div>
-</div>
-</div></section>
+      <section>
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="serif">Como eu trabalho</h2>
+            <span class="n">04</span>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <span class="n">01</span>
+              <h3 class="serif">Diagnóstico</h3>
+              <p>Entendo o problema com os dados.</p>
+            </div>
+            <div class="step">
+              <span class="n">02</span>
+              <h3 class="serif">Hipótese</h3>
+              <p>Defino o que testar e por quê.</p>
+            </div>
+            <div class="step">
+              <span class="n">03</span>
+              <h3 class="serif">Execução</h3>
+              <p>Ajusto campanhas e fluxos.</p>
+            </div>
+            <div class="step">
+              <span class="n">04</span>
+              <h3 class="serif">Aprendizado</h3>
+              <p>Registro o que funcionou.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<section id="contato" class="band" style="padding-bottom:56px"><div class="wrap">
-<h2 class="serif">Fale comigo</h2>
-<div class="grid">
-<p>Este formulário é meu case de CRM: ao enviar, você recebe um e-mail automático.</p>
-<div class="ph" aria-label="Espaço reservado para o formulário do HubSpot"><div class="f">Seu nome</div><div class="f">Seu melhor e-mail</div><div class="f">Você é</div><span class="b">Enviar contato</span><small>Espaço do formulário do HubSpot</small></div>
-</div>
-<div class="links"><a class="btn s" href="#">LinkedIn</a><a class="btn s" href="#">E-mail</a><a class="lk" href="#">Currículo (PDF)</a></div>
-</div></section>
-</main>
+      <section id="contato" class="band">
+        <div class="wrap">
+          <h2 class="serif">Fale comigo</h2>
+          <div class="grid">
+            <p>
+              Este formulário é meu case de CRM: ao enviar, você recebe um
+              e-mail automático.
+            </p>
+            <div
+              class="contact-form"
+              role="region"
+              aria-label="Formulário de contato"
+            >
+              <p id="form-status" class="form-status" role="status">
+                Carregando formulário…
+              </p>
+              <div
+                class="hs-form-frame"
+                data-region="na1"
+                data-form-id="c2ff372a-85ba-40e0-8f90-18badde87196"
+                data-portal-id="51906766"
+              ></div>
+              <noscript
+                >Ative o JavaScript no navegador para preencher o formulário de
+                contato.</noscript
+              >
+            </div>
+          </div>
+          <div class="links">
+            <span class="btn s pending" aria-disabled="true" title="Em breve"
+              >LinkedIn</span
+            ><span class="btn s pending" aria-disabled="true" title="Em breve"
+              >E-mail</span
+            ><span class="lk pending" aria-disabled="true" title="Em breve"
+              >Currículo (PDF)</span
+            >
+          </div>
+        </div>
+      </section>
+    </main>
 
-<footer><div class="wrap">© Leonardo Lagoa · Rio de Janeiro</div></footer>
-
-<script>
-(function(){var el=document.getElementById('clock');function t(){try{el.textContent='Rio de Janeiro · '+new Intl.DateTimeFormat('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'}).format(new Date())}catch(e){el.textContent='Rio de Janeiro'}}t();setInterval(t,30000)})();
-</script>
-</body>
+    <footer><div class="wrap">© Leonardo Lagoa · Rio de Janeiro</div></footer>
+  </body>
 </html>
