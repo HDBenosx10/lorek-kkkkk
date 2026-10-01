@@ -35,4 +35,4 @@ Não envie dados fictícios ao formulário de produção durante a revisão visu
 
 O [HubSpot Lotes](tools/hubspot-lotes/README.md) gera contatos sintéticos por segmento e demonstra o primeiro envio no navegador. O código fica em `tools/hubspot-lotes/`, separado dos arquivos do site. Ele não é carregado pela página nem faz parte do pacote de deploy do Cloudflare.
 
-[Baixar o aplicativo para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.0.0). O executável inclui Python e dependências; basta Edge ou Chrome e internet. A prévia não cria contatos. O envio de lote cria contatos de teste no formulário deste portfólio.
+[Baixar o aplicativo para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.1.0). O executável inclui Python e dependências. A aba Config permite alterar URL, IDs, modos e sincronizar a definição do formulário. Modos em tela usam Edge/Chrome; Todos via API dispensa navegador. A prévia não cria contatos. O envio de lote cria contatos de teste no formulário deste portfólio.
