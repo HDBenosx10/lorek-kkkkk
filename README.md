@@ -30,3 +30,9 @@ Para revisar localmente, use qualquer servidor HTTP estático que ofereça URLs 
 Antes de publicar, confira as versões desktop e móvel, filtros, links de detalhes, navegação por teclado e carregamento do formulário. Valide o JavaScript com `node --check main.js` e `node --check beta.js` e `node --check beta-form.js`.
 
 Não envie dados fictícios ao formulário de produção durante a revisão visual. Um teste real de contato é necessário para verificar o envio e as automações do CRM.
+
+## Aplicativo Windows de teste
+
+O [HubSpot Lotes](tools/hubspot-lotes/README.md) gera contatos sintéticos por segmento e demonstra o primeiro envio no navegador. O código fica em `tools/hubspot-lotes/`, separado dos arquivos do site. Ele não é carregado pela página nem faz parte do pacote de deploy do Cloudflare.
+
+[Baixar o aplicativo para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.0.0). O executável inclui Python e dependências; basta Edge ou Chrome e internet. A prévia não cria contatos. O envio de lote cria contatos de teste no formulário deste portfólio.
