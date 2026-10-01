@@ -1,61 +1,81 @@
-# HubSpot Lotes — Windows
+# HubSpot Lotes 1.1 — Windows
 
-Aplicação simples para gerar contatos sintéticos segmentados no formulário da beta de Leonardo Lagoa.
+[Baixar a versão atual para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.1.0).
 
-## Baixar para usar
+O `.exe` inclui Python e bibliotecas. Não precisa instalar Python, fazer login no GitHub/HubSpot ou informar token. Para modos em tela, tenha Edge ou Chrome; Todos via API funciona sem navegador instalado. Todos os modos precisam de internet quando usam uma página ou formulário remoto. Validado no Windows 11. O executável não tem assinatura digital; o Windows pode mostrar aviso de editor desconhecido. Confira os hashes SHA-256 anexos à release.
 
-[Baixar HubSpotLotes.exe para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/download/hubspot-lotes-v1.0.0/HubSpotLotes.exe)
+## Lotes e Config
 
-[Release com pacote e instruções](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.0.0)
+Na aba **Lotes**, escolha segmentos e quantidade total (1 a 5.000). Os contatos têm nomes `TESTE`, sobrenomes com `LOTE-<identificador>` e e-mails únicos em `example.com`, sem destinatários reais.
 
-O executável já inclui o interpretador Python e as bibliotecas. Não exige Python instalado, conta no GitHub, login no HubSpot ou token de API. Requer Windows de 64 bits, Edge ou Chrome e internet. Foi validado no Windows 11. A prévia também precisa de internet para abrir a página pública.
+A aba **Config** permite alterar:
 
-Esta versão aponta para o formulário de Leonardo Lagoa; ela não configura formulários de outras contas. Usar **Enviar lote** envia contatos de teste para esse CRM. Para demonstrar ao cliente sem criar contatos, use **Prévia sem enviar**.
+- URL da página, Portal ID e Form ID HubSpot. **Identificar IDs pela URL** tenta ler os identificadores do embed ou de scripts locais com o endpoint da Forms API. Se houver vários formulários ou a integração não estiver exposta no HTML, informe os IDs manualmente.
+- Modo: **Primeiro em tela + restantes via API**, **Todos em tela** ou **Todos via API**.
+- Intervalo entre contatos (1 a 60 segundos), pausa por campo (0 a 10 segundos) e navegador.
+- Sincronização antes de cada lote e parada em erros de validação.
+- Propriedade de segmentação, valores adicionais e seletores CSS para páginas com HTML diferente.
 
-O executável não tem assinatura digital; o Windows pode apresentar aviso de editor desconhecido. Os hashes SHA-256 dos arquivos estão nos anexos da release.
+Clique em **Salvar configuração**. As preferências e a última definição sincronizada ficam em `%APPDATA%/HubSpotLotes/config.json`, fora do executável. Não é necessário recompilar para mudar essas preferências.
 
-## Executar
+**Prévia sem enviar** não faz POST de contatos. No modo Todos em tela, preenche cada contato em sequência sem enviar. No modo misto, apenas o primeiro aparece no navegador; os demais são validados e registrados no CSV. No modo Todos via API, valida os dados e gera o CSV sem abrir navegador. A leitura/sincronização da definição usa GET e pode ocorrer durante a prévia.
 
-Abra `HubSpotLotes.exe`. Não precisa instalar Python. Requer conexão com a internet e Microsoft Edge ou Google Chrome instalado.
+**Enviar lote** cria contatos de teste no destino configurado. O modo em tela preenche de verdade a página e observa a resposta do envio. O app bloqueia POSTs da página que apontem para IDs diferentes dos configurados; não os redireciona. Ele suporta o envio direto da Forms API e o envio do embed HubSpot. Um front-end com proxy próprio requer adaptação.
 
-1. Marque Recrutador, Gestor(a) de Marketing, Colega de área e/ou Curioso.
-2. Informe a quantidade total, entre 1 e 5.000. A distribuição é equilibrada; a diferença entre segmentos é de no máximo um contato.
-3. Use **Prévia sem enviar** para ver o primeiro preenchimento e gerar um CSV sem criar contatos.
-4. Use **Enviar lote** para criar os contatos de teste no HubSpot. O primeiro contato é preenchido e enviado em uma janela real do navegador. Os restantes são enviados pela Forms API, um por segundo, sem janelas adicionais.
-5. Acompanhe os contadores. **Parar** interrompe os próximos envios; a requisição em andamento pode terminar.
+## Quando o formulário mudar
 
-O navegador fecha ao fim do lote. Enquanto ele está aberto, deixe a janela concluir o envio; fechá-la pode interromper a demonstração.
+**Sincronizar campos e opções** lê a definição pública do formulário HubSpot. Com sincronização antes de cada lote ativada (padrão), as opções e os identificadores internos são atualizados antes de gerar os contatos.
 
-## Dados e relatórios
+- Rótulos ou valores de segmentos alterados aparecem após a sincronização. Se um segmento selecionado desaparecer, o lote para para você selecionar novamente.
+- Campos removidos deixam de ser enviados. Campos opcionais novos ficam vazios por padrão.
+- Campos obrigatórios novos impedem o envio até configurar um valor em **Valores adicionais**. Exemplo: `{"company":"TESTE Empresa"}`. Para escolhas, use o valor interno apresentado na definição sincronizada. O app não inventa valores de negócio.
+- Consentimento, CAPTCHA, arquivos, pagamentos e regras condicionais detectados na definição bloqueiam o envio para revisão. Regras não expostas pela definição ainda podem ser recusadas pelo HubSpot; o app não ignora a validação do servidor.
+- A definição pública precisa estar disponível para sincronização automática. Se o endpoint mudar, ficar indisponível ou o formulário não for compatível, a leitura falha e a configuração anterior é preservada. Com sincronização automática ativada, o lote não prossegue usando dados antigos.
 
-Cada contato possui nome com prefixo `TESTE`, sobrenome com sufixo `LOTE-<identificador>` e e-mail único `teste.<lote>.<sequência>@example.com`. São endereços de exemplo; não recebem mensagens. A aplicação não gera endereços de pessoas reais.
+A sincronização atualiza **o aplicativo**. Ela não reescreve o HTML nem o JavaScript de seu site. Na beta atual, os campos e opções do formulário nativo são definidos no código do front-end. Se mudar campos/valores no HubSpot, o site também precisa ser atualizado para os envios em tela refletirem essa mudança. Os envios pela API usam a definição recém-sincronizada.
 
-O CSV fica em `Documentos/HubSpotLotes/lote-<identificador>.csv`, com segmento, status e detalhe por contato processado. Contatos não tentados depois de uma interrupção não aparecem como enviados. O botão **Abrir relatório CSV** abre o arquivo no aplicativo padrão do Windows.
+## Seletores de páginas diferentes
 
-Para filtrar no HubSpot, use a propriedade **Você é…** / `origem_formulario_1`. Para localizar ou remover estes contatos depois, filtre nome começando com `TESTE` e sobrenome contendo o identificador `LOTE-...` do relatório. Os identificadores das opções foram conferidos no formulário original.
+Campos sem seletor explícito são encontrados pelos atributos `name="propriedade"` ou `name="0-1/propriedade"`. Isso acompanha mudanças de IDs e classes quando os nomes internos permanecem iguais. Se o HTML não tiver nomes correspondentes, ajuste o JSON de seletores na aba Config. Não precisa recompilar:
 
-`aceito` significa que o formulário/API confirmou a recepção. Confira também no CRM se o contato foi classificado como spam e se as automações desejadas dispararam. Não há confirmação de entrega de e-mails.
+```json
+{
+  "frame": "",
+  "form": "form",
+  "firstname": "",
+  "lastname": "",
+  "email": "",
+  "segment": "",
+  "submit": "button[type=\"submit\"], input[type=\"submit\"]",
+  "success": "#contact-success",
+  "status": "#native-status"
+}
+```
 
-## Falhas
+`frame` é um seletor de iframe, quando necessário; vazio usa a página principal ou tenta um único iframe HubSpot com título Form. `form` precisa encontrar um único formulário dentro desse escopo. Para um campo adicional, adicione sua propriedade como chave e o seletor como valor. Páginas com controles personalizados podem precisar de adaptação de código; nem toda UI funciona como um input/select nativo.
 
-Se o primeiro envio for recusado, o lote para antes de enviar o restante. Se a API retornar erro, limite de requisições ou falha de conexão, o lote também para. Não há reenvio automático: um timeout pode acontecer depois de o HubSpot já ter aceitado o contato.
+## Relatórios e erros
 
-Se o HubSpot bloquear o domínio `example.com`, revise as restrições do formulário ou use a prévia. A aplicação não ignora consentimento, CAPTCHA ou regras de validação. Uma alteração nesses campos no HubSpot exige atualizar a aplicação.
+O CSV fica em `Documentos/HubSpotLotes/lote-<identificador>.csv`. Há segmento, status e detalhe por contato processado. **Parar** impede os próximos envios; a operação em andamento pode terminar. O navegador fecha ao final.
 
-## Implementação
+O primeiro envio em tela deve funcionar antes de continuar no modo misto. Erros de limite HTTP 429 e resultados incertos sempre interrompem o lote. A configuração permite continuar após recusas de validação conhecidas nos envios pela API. Não há repetição automática: um timeout pode acontecer depois da aceitação.
 
-Python + Tkinter para a interface; Playwright com Edge/Chrome para o primeiro contato; biblioteca padrão do Python para as requisições restantes. Sem token ou senha. O destino está fixado no formulário autorizado, portal 51906766 / formulário c2ff372a-85ba-40e0-8f90-18badde87196.
+`aceito` confirma a resposta do formulário/API; confira também a classificação de spam e as automações no HubSpot. Os e-mails de exemplo não recebem confirmações. Para localizar e limpar os contatos, use o prefixo TESTE e o identificador LOTE do CSV.
 
-Código em `app.py`; dependências em `requirements.txt`. Para reconstruir no Windows:
+## Código e reconstrução
+
+`app.py`: interface Tkinter. `engine.py`: configuração, sincronização, geração e envio. `test_app.py`: testes locais sem contatos em produção. `requirements.txt`: dependências. Os arquivos ficam em `tools/hubspot-lotes/`, separados do site e excluídos do pacote de deploy Cloudflare.
 
 ```powershell
 python -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements.txt
+.venv/Scripts/python.exe test_app.py
 .venv/Scripts/python.exe -m PyInstaller --onefile --windowed --collect-all playwright --name HubSpotLotes app.py
 ```
 
-## Validação desta entrega
+A leitura de configuração pública do HubSpot não exige token e não utiliza APIs privadas da conta. Ela pode mudar no futuro. O transporte HTTPS usa a validação de certificados do Windows; não desativa TLS.
 
-Testes de geração/distribuição, identificadores, e-mails únicos, quantidades inválidas, falhas HTTP e limites. Teste com navegador real contra um servidor local: primeiro envio visível + restantes pela API, prévia sem requisições e interrupção na primeira falha. Nenhum lote foi enviado ao HubSpot de produção durante o desenvolvimento.
+## Validação
 
-O executável também passou no teste de inicialização da interface Tkinter e acionamento do Edge empacotado com Playwright, sem requisições externas. Os seis testes podem ser executados com `python test_app.py` após instalar as dependências.
+17 testes cobrem os três modos, prévias sem envio, distribuição/identificadores, persistência, atualização das opções, campos removidos/obrigatórios, bloqueios, interrupção e continuação em erros de validação. Testes com navegador real usam servidor local e respostas interceptadas, sem enviar contatos ao HubSpot. A sincronização e a descoberta de IDs foram verificadas na página e no formulário públicos. O executável é validado separadamente com a aba Config e o driver Edge.
+
