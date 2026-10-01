@@ -1,13 +1,14 @@
 import { copyFile, mkdir, readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import { fileURLToPath } from 'node:url';
 
 // Explicit manifest keeps desktop tools and CI credentials outside the public site.
 const files = ['index.html', 'styles.css', 'main.js', 'beta.html', 'beta.css', 'beta.js', 'beta-form.js'];
 const root = new URL('../', import.meta.url);
 const contents = new Map(await Promise.all(files.map(async file => [file, await readFile(new URL(file, root))])));
 for (const file of files.filter(file => file.endsWith('.js'))) {
-  execFileSync(process.execPath, ['--check', new URL(file, root).pathname.replace(/^\/([A-Z]:)/, '$1')]);
+  execFileSync(process.execPath, ['--check', fileURLToPath(new URL(file, root))]);
 }
 assert.match(contents.get('beta.html').toString(), /noindex,\s*nofollow/);
 assert.doesNotMatch(contents.get('index.html').toString(), /href=["']\/?beta(?:["'#/])/i);
