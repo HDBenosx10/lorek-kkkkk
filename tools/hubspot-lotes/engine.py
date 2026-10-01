@@ -23,7 +23,7 @@ def open_url(url, timeout=25):
     )
 
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 DEFAULT_OPTIONS = {
     "Recrutador": "NC2ztwgcNJTilAoEroC9k",
     "Gestor(a) de Marketing": "LSTeQgnsDY0mVp-DQelPI",

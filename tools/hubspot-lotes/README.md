@@ -1,6 +1,6 @@
-# HubSpot Lotes 1.1 — Windows
+# HubSpot Lotes — Windows
 
-[Baixar a versão atual para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/tag/hubspot-lotes-v1.1.0).
+[Baixar a versão atual para Windows x64](https://github.com/HDBenosx10/lorek-kkkkk/releases/latest).
 
 O `.exe` inclui Python e bibliotecas. Não precisa instalar Python, fazer login no GitHub/HubSpot ou informar token. Para modos em tela, tenha Edge ou Chrome; Todos via API funciona sem navegador instalado. Todos os modos precisam de internet quando usam uma página ou formulário remoto. Validado no Windows 11. O executável não tem assinatura digital; o Windows pode mostrar aviso de editor desconhecido. Confira os hashes SHA-256 anexos à release.
 
@@ -78,4 +78,10 @@ A leitura de configuração pública do HubSpot não exige token e não utiliza 
 ## Validação
 
 17 testes cobrem os três modos, prévias sem envio, distribuição/identificadores, persistência, atualização das opções, campos removidos/obrigatórios, bloqueios, interrupção e continuação em erros de validação. Testes com navegador real usam servidor local e respostas interceptadas, sem enviar contatos ao HubSpot. A sincronização e a descoberta de IDs foram verificadas na página e no formulário públicos. O executável é validado separadamente com a aba Config e o driver Edge.
+
+
+
+## Build e releases automáticos
+
+O GitHub Actions testa e compila o app a cada alteração na branch main. Tags hubspot-lotes-vX.Y.Z, correspondentes a VERSION no engine.py, publicam o executável, ZIP e SHA-256 automaticamente. Consulte CI/CD no README da raiz. A versão 1.1.1 inaugura a distribuição pelo pipeline.
 
