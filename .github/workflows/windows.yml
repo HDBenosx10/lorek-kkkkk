@@ -74,6 +74,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
         run: |
+          tag_commit=$(gh api "repos/$GH_REPO/commits/$RELEASE_TAG" --jq .sha 2>/dev/null || true)
+          if [ -n "$tag_commit" ] && [ "$tag_commit" != "$GITHUB_SHA" ]; then
+            echo 'Release tag points to a different commit; publish a new version instead.'
+            exit 1
+          fi
           if ! gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release create "$RELEASE_TAG" --target "$GITHUB_SHA" --title "HubSpot Lotes ${RELEASE_TAG#hubspot-lotes-v}" --notes-file package/release-notes.md
           fi
