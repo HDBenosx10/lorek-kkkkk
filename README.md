@@ -43,8 +43,9 @@ Workflows em `.github/workflows/`: **Portfolio - Cloudflare Pages** e **HubSpot 
 
 O workflow Windows executa os testes com formulários locais, compila com Python 3.14/PyInstaller e abre o executável em teste para conferir interface, Config e navegador. Cada alteração no app gera artefatos para download (retenção de 30 dias). Nenhum teste envia contatos ao CRM.
 
-Para publicar uma nova versão, atualize `VERSION` em `tools/hubspot-lotes/engine.py`, faça commit e envie uma tag correspondente, como `hubspot-lotes-v1.2.0`. A release recebe automaticamente o `.exe`, o ZIP para o cliente e hashes SHA-256. Pelo botão Run workflow, `release_tag` vazio só gera artefatos; preenchido publica a versão correspondente. Reexecutar uma release substitui os assets de mesmo nome.
+Para publicar uma nova versão, atualize `VERSION` em `tools/hubspot-lotes/engine.py`, faça commit e envie uma tag correspondente, como `hubspot-lotes-v1.2.0`. A release recebe automaticamente o `.exe`, o ZIP para o cliente e hashes SHA-256. Pelo botão Run workflow, `release_tag` vazio só gera artefatos; preenchido publica a versão correspondente. Reexecutar uma release do mesmo commit substitui os assets de mesmo nome. O pipeline recusa usar uma tag que aponta para outro commit.
 
 O deploy usa os secrets `CLOUDFLARE_ACCOUNT_ID` e `CLOUDFLARE_API_TOKEN`, já configurados no repositório. O token exclusivo `github-lorek-pages-deploy` tem somente Pages Write nesta conta. Para trocar a credencial, atualize o secret no GitHub; nunca coloque tokens no código. Permissão de escrita no GitHub fica restrita ao job de release.
 
 Para verificar o site localmente: `node scripts/site.mjs`. Para conferir o deploy: `node scripts/site.mjs verify https://portifolio-leonardo-lagoa.pages.dev`. Se uma validação falhar, o workflow interrompe a publicação e deixa o erro na aba Actions.
+
