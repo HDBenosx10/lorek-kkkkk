@@ -19,11 +19,7 @@
     <link rel="stylesheet" href="/beta.css" />
     <script src="/main.js" defer></script>
     <script src="/beta.js" defer></script>
-    <script
-      id="hubspot-embed"
-      src="https://js.hsforms.net/forms/embed/51906766.js"
-      defer
-    ></script>
+    <script src="/beta-form.js" defer></script>
   </head>
   <body id="topo">
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
@@ -432,16 +428,92 @@
             role="region"
             aria-label="Formulário de contato"
           >
-            <p id="form-status" class="form-status" role="status">
-              Carregando formulário…
-            </p>
-            <div
-              class="hs-form-frame"
-              data-region="na1"
-              data-form-id="c2ff372a-85ba-40e0-8f90-18badde87196"
-              data-portal-id="51906766"
-            ></div>
-            <noscript>Ative o JavaScript para preencher o formulário.</noscript>
+            <div class="form-heading">
+              <span class="eyebrow">Seu próximo passo</span>
+              <h3>Vamos conversar?</h3>
+              <p>Deixe seu contato e a gente continua daqui.</p>
+            </div>
+            <form id="contact-native" aria-label="Deixe seu contato" hidden>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="contact-firstname">Nome</label
+                  ><input
+                    id="contact-firstname"
+                    name="firstname"
+                    autocomplete="given-name"
+                    placeholder="Seu nome"
+                    maxlength="200"
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="contact-lastname">Sobrenome</label
+                  ><input
+                    id="contact-lastname"
+                    name="lastname"
+                    autocomplete="family-name"
+                    placeholder="Seu sobrenome"
+                    maxlength="200"
+                  />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="contact-email"
+                  >E-mail <span aria-hidden="true">*</span></label
+                ><input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  placeholder="voce@empresa.com"
+                  required
+                  maxlength="254"
+                  aria-describedby="email-help"
+                /><small id="email-help">O único campo obrigatório.</small>
+              </div>
+              <div class="form-field">
+                <label for="contact-profile">Você é…</label
+                ><select id="contact-profile" name="origem_formulario_1">
+                  <option value="">Selecione, se quiser</option>
+                  <option value="NC2ztwgcNJTilAoEroC9k">Recrutador</option>
+                  <option value="LSTeQgnsDY0mVp-DQelPI">
+                    Gestor(a) de Marketing
+                  </option>
+                  <option value="Colega de área">Colega de área</option>
+                  <option value="Curioso">Curioso</option>
+                </select>
+              </div>
+              <p class="form-privacy">
+                Seus dados serão enviados ao meu HubSpot para responder ao seu
+                contato.
+              </p>
+              <button type="submit" class="form-submit">
+                <span>Enviar contato</span><span aria-hidden="true">↗</span>
+              </button>
+              <p
+                id="native-status"
+                class="native-status"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              ></p>
+            </form>
+            <div id="contact-success" class="form-success" tabindex="-1" hidden>
+              <span class="success-symbol" aria-hidden="true">✓</span>
+              <h3>Recebi seu contato.</h3>
+              <p>
+                Obrigado por chegar até aqui. Vamos continuar essa conversa.
+              </p>
+            </div>
+            <noscript
+              ><p>
+                Ative o JavaScript ou
+                <a href="/#contato">use o formulário da página principal</a>.
+              </p></noscript
+            >
+            <a class="form-fallback" href="/#contato"
+              >Prefere o formulário original? ↗</a
+            >
           </div>
         </div>
       </section>
