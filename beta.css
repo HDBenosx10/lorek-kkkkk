@@ -1234,3 +1234,30 @@ h3 {
     gap: 0;
   }
 }
+
+/* Revisão de conteúdo: reaproveita os tokens existentes. */
+.hero-description strong{color:var(--deep);font-weight:600}
+.hero-flow{margin:18px 0 0;max-width:44ch;font-size:12px;font-weight:500;line-height:1.7;color:var(--wine)}
+.case-badge{display:inline-block;margin:0 0 14px;padding:4px 10px;border:1px solid var(--wine);border-radius:30px;background:var(--rose);color:var(--wine);font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.case-brief{display:grid;gap:12px;max-width:46ch;margin:18px 0 22px}
+.case-brief dt{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--wine)}
+.case-brief dd{margin:2px 0 0;font-size:12px;line-height:1.7;color:var(--muted)}
+.case-brief ul{margin:4px 0 0;padding-left:16px}
+.case-metrics strong{font-size:22px;font-weight:500;letter-spacing:-.04em;color:var(--wine);margin-right:4px}
+.case-metrics strong:not(:first-child){margin-left:14px}
+.framework{list-style:none;margin:0 0 24px;padding:0;display:grid;gap:16px}
+.framework li{border-top:1px solid var(--line);padding-top:12px}
+.framework h4{margin:0 0 4px;font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--wine)}
+.framework p{margin:0;font-size:14px}
+.print-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin:0 0 20px}
+.print-slot{margin:0}
+.print-slot img{width:100%;border:1px solid var(--line);border-radius:var(--radius)}
+.print-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;aspect-ratio:16/9;padding:12px;border:1px dashed #b698a2;border-radius:var(--radius);background:var(--white);color:var(--muted);font-size:11px;text-align:center}
+.print-ph small{font-size:9px}
+.print-slot figcaption{margin-top:8px;font-size:11px;color:var(--muted)}
+.stack-title{margin:36px 0 0;color:var(--wine)}
+.skill-list ul{grid-column:2;display:flex;flex-wrap:wrap;gap:4px 16px;margin:8px 0 0;padding:0;list-style:none;font-size:11px;color:var(--muted)}
+.skill-list li::before{content:"•";margin-right:6px;color:var(--gold)}
+.form-heading .lab-callout{padding:12px 14px;border-left:3px solid var(--wine);background:var(--rose);color:var(--deep);font-size:13px}
+nav a:focus-visible{outline-offset:3px}
+@media (max-width:760px){.nav-sec{display:none}nav{justify-content:space-between}}
